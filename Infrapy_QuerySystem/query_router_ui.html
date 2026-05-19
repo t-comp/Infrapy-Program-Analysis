@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>InfraPy — Query Router</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #f4f6f8;
+  --surface:   #ffffff;
+  --panel:     #f8f9fb;
+  --border:    #e2e6ec;
+  --border2:   #cdd4de;
+  --blue:      #1a6bbf;
+  --blue-dim:  #bdd2ed;
+  --teal:      #0d8c5e;
+  --teal-dim:  #b3e0cf;
+  --amber:     #a0620a;
+  --amber-dim: #f0d9b0;
+  --purple:    #7030a8;
+  --purple-dim:#dcc8f0;
+  --text:      #1a2333;
+  --text-dim:  #4a5a72;
+  --text-muted:#8a9ab0;
+  --green:     #1a7a40;
+  --red:       #c0303030;
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Syne', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ── SHELL ─────────────────────────────────── */
+.shell {
+  width: 100%;
+  max-width: 1020px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 32px 100px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  height: 660px;
+}
+
+/* ── TITLEBAR ──────────────────────────────── */
+.titlebar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.dots { display: flex; gap: 7px; }
+.dot  { width: 11px; height: 11px; border-radius: 50%; }
+.dot:nth-child(1) { background: #ff5f57; }
+.dot:nth-child(2) { background: #ffbd2e; }
+.dot:nth-child(3) { background: #28c840; }
+.title-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+.clear-btn {
+  background: none;
+  border: 1px solid #1a2a3a;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 3px 11px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.clear-btn:hover { border-color:#e08080; color: var(--red); }
+.db-badge {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: #08121e;
+  color: var(--blue-dim);
+  border: 1px solid #10223a;
+  padding: 3px 11px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ── BODY ──────────────────────────────────── */
+.body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── SIDEBAR ───────────────────────────────── */
+.sidebar {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.sb-section { padding: 0 12px 14px; }
+.sb-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  color: var(--text-dim);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s, color 0.12s;
+  margin-bottom: 2px;
+}
+.mode-btn:hover { background: #0e1828; color: #90b0cc; }
+.mode-btn.active.m-graph    { background: #081628; color: var(--blue); }
+.mode-btn.active.m-coverage { background: #071410; color: var(--teal); }
+.mode-btn.active.m-dataflow { background: #100c04; color: var(--amber); }
+.mode-btn.active.m-fuzzing  { background: #0e061a; color: var(--purple); }
+
+.mode-icon { width: 17px; height: 17px; flex-shrink: 0; opacity: 0.6; }
+.mode-btn.active .mode-icon { opacity: 1; }
+
+.sb-divider { height: 1px; background: var(--border); margin: 2px 12px 14px; }
+
+.ex-btn {
+  display: block;
+  width: 100%;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  padding: 6px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  margin-bottom: 5px;
+  line-height: 1.45;
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+.ex-btn:hover { border-color: var(--border2); color: #88aac8; background: #0a1220; }
+
+/* ── CONTENT ───────────────────────────────── */
+.content { display: flex; flex-direction: column; min-height: 0; }
+
+/* ── OUTPUT ────────────────────────────────── */
+.output {
+  flex: 1;
+  padding: 18px 22px 12px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+}
+.output::-webkit-scrollbar { width: 6px; }
+.output::-webkit-scrollbar-track { background: rgba(0,0,0,0.15); border-radius: 3px; }
+.output::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+.welcome { padding: 4px 0 10px; }
+.logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: #162030;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  white-space: pre;
+}
+.hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+.hint-key {
+  background: #0c1626;
+  border: 1px solid #182438;
+  color: #2a4460;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10.5px;
+}
+
+.entry { margin-bottom: 20px; animation: fadeIn 0.18s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(3px); } to { opacity:1; transform:translateY(0); } }
+
+.q-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  color: var(--text);
+  margin-bottom: 7px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.q-prompt { color: var(--green); font-size: 14px; flex-shrink: 0; }
+
+.result {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.75;
+  padding: 10px 14px;
+  border-radius: 0 6px 6px 0;
+  border-left: 2px solid var(--border2);
+  background: var(--panel);
+  color: var(--text-dim);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.result.r-graph    { color: #7ab8ee; border-left-color: var(--blue-dim);   background: #060e1c; }
+.result.r-coverage { color: #5acc98; border-left-color: var(--teal-dim);   background: #050e0b; }
+.result.r-dataflow { color: #d0a868; border-left-color: var(--amber-dim);  background: #0e0b05; }
+.result.r-fuzzing  { color: #c070e0; border-left-color: var(--purple-dim); background: #0a0510; }
+.result.r-error    { color: #cc6868; border-left-color: #3a1010;           background: #0d0707; }
+.result.r-loading  { color: var(--text-muted); border-left-color: var(--border); animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.45;} }
+
+.tag {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-right: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+  flex-shrink: 0;
+}
+.tag-graph    { background: #050f20; color: #3a78cc; border: 1px solid #0e1e3a; }
+.tag-coverage { background: #040e0a; color: #267a50; border: 1px solid #0a2018; }
+.tag-dataflow { background: #120d04; color: #907035; border: 1px solid #281a08; }
+.tag-fuzzing  { background: #0d0618; color: #a050c8; border: 1px solid #220d38; }
+
+/* ── INPUT BAR ─────────────────────────────── */
+.input-bar {
+  border-top: 1px solid var(--border);
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.ps { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--green); flex-shrink: 0; }
+#qinput {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  padding: 9px 13px;
+  border-radius: 7px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+#qinput:focus { border-color: var(--blue-dim); box-shadow: 0 0 0 2px rgba(26,74,122,0.2); }
+#qinput::placeholder { color: var(--text-muted); }
+#qinput:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.run-btn {
+  background: #081628;
+  border: 1px solid var(--blue-dim);
+  color: var(--blue);
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.12s, opacity 0.12s;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+.run-btn:hover { background: #0e1e3a; }
+.run-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ── STATUS BAR ────────────────────────────── */
+.status-bar {
+  border-top: 1px solid #0a1220;
+  padding: 5px 18px;
+  display: flex;
+  gap: 20px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.st {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.live { width: 6px; height: 6px; border-radius: 50%; background: #267040; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- titlebar -->
+  <div class="titlebar">
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <span class="title-text">infrapy — natural language query router</span>
+    <button class="clear-btn" onclick="clearOutput()">✕ clear</button>
+    <span class="db-badge">413db.db</span>
+  </div>
+
+  <!-- body -->
+  <div class="body">
+
+    <!-- sidebar -->
+    <div class="sidebar">
+      <div class="sb-section">
+        <div class="sb-label">Query type</div>
+
+        <button class="mode-btn m-graph active" id="btn-graph" onclick="setMode('graph')">
+          <!-- call graph icon -->
+          <svg class="mode-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="10" cy="3.5" r="1.8"/>
+            <circle cx="3.5" cy="16" r="1.8"/>
+            <circle cx="16.5" cy="16" r="1.8"/>
+            <line x1="10" y1="5.3" x2="4.7" y2="14.3"/>
+            <line x1="10" y1="5.3" x2="15.3" y2="14.3"/>
+          </svg>
+          Call graph
+        </button>
+
+        <button class="mode-btn m-coverage" id="btn-coverage" onclick="setMode('coverage')">
+          <!-- coverage checkmark box icon -->
+          <svg class="mode-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="3" y="3" width="14" height="14" rx="2.5"/>
+            <polyline points="6.5,10.5 8.5,13 13.5,7.5"/>
+          </svg>
+          Coverage
+        </button>
+
+        <button class="mode-btn m-dataflow" id="btn-dataflow" onclick="setMode('dataflow')">
+          <!-- dataflow branching icon -->
+          <svg class="mode-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="5" cy="10" r="1.8"/>
+            <circle cx="15" cy="5.5" r="1.8"/>
+            <circle cx="15" cy="14.5" r="1.8"/>
+            <line x1="6.8" y1="9.3" x2="13.2" y2="6.2"/>
+            <line x1="6.8" y1="10.7" x2="13.2" y2="13.8"/>
+          </svg>
+          Dataflow
+        </button>
+
+        <button class="mode-btn m-fuzzing" id="btn-fuzzing" onclick="setMode('fuzzing')">
+          <!-- fuzzing "bug/dice" icon -->
+          <svg class="mode-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M10 3 C6 3 4 6 4 10 C4 14 6 17 10 17 C14 17 16 14 16 10 C16 6 14 3 10 3Z"/>
+            <line x1="10" y1="6.5" x2="10" y2="10.5"/>
+            <circle cx="10" cy="12.5" r="0.9" fill="currentColor" stroke="none"/>
+          </svg>
+          Fuzzing
+        </button>
+      </div>
+
+      <div class="sb-divider"></div>
+
+      <div class="sb-section">
+        <div class="sb-label">Examples</div>
+        <div id="ex-list"></div>
+      </div>
+    </div>
+
+    <!-- content -->
+    <div class="content">
+      <div class="output" id="output">
+        <div class="welcome" id="welcome">
+          <div class="logo">  ___        __           ____
+ |_ _|_ __  / _|_ __ __  |  _ \ _   _
+  | || '_ \| |_| '__/ _` | |_) | | | |
+  | || | | |  _| | | (_| |  __/| |_| |
+ |___|_| |_|_| |_|  \__,_|_|    \__, |
+                                  |___/</div>
+          <p class="hint">Select a query type on the left or click an example below.</p>
+          <p class="hint" style="margin-top:5px;">Press <span class="hint-key">Enter</span> to run a query.</p>
+        </div>
+      </div>
+
+      <div class="input-bar">
+        <span class="ps">›</span>
+        <input id="qinput" type="text"
+          placeholder="Ask a question about the codebase..."
+          autocomplete="off" />
+        <button class="run-btn" id="run-btn" onclick="runQuery()">▶ run</button>
+      </div>
+
+      <div class="status-bar">
+        <div class="st"><div class="live"></div> connected</div>
+        <div class="st">413db.db</div>
+        <div class="st"><span id="ts">—</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  EXAMPLES
+// ─────────────────────────────────────────────
+const EXAMPLES = {
+  graph: [
+    "Is detect_signals a caller of calc_det_thresh?",
+    "What does run_fk directly call?",
+    "Who calls compute_beam_power?",
+    "What is the path from beam_window to project_Ab?",
+    "What can beam_window reach?",
+    "All callers of calc_det_thresh"
+  ],
+  coverage: [
+    "What is the coverage of beamforming_new.py?",
+    "What lines are uncovered in beamforming_new.py?",
+    "Show overall coverage summary",
+    "Compare test runs for beamforming_new.py",
+    "What is the coverage of test_beamforming.py?"
+  ],
+  dataflow: [
+    "Where is thresh used?",
+    "Are thresh and det_mask data-dependent?",
+    "Trace the det_p_val variable",
+    "Where is dets defined?",
+    "Are fstat_vals and det_mask data-dependent?"
+  ],
+  fuzzing: [
+    "Show fuzzing summary",
+    "Show all fuzzing failures",
+    "Show fuzzing runs for stage run_fk",
+    "Show fuzzing runs for stage run_fd",
+    "Show risky fuzzing runs",
+    "Fuzzing channel 2"
+  ]
+};
+
+const TAG_CLS   = { graph:'tag-graph', coverage:'tag-coverage', dataflow:'tag-dataflow', fuzzing:'tag-fuzzing' };
+const TAG_LABEL = { graph:'call-graph', coverage:'coverage', dataflow:'dataflow', fuzzing:'fuzzing' };
+const RES_CLS   = { graph:'r-graph', coverage:'r-coverage', dataflow:'r-dataflow', fuzzing:'r-fuzzing' };
+
+let mode = 'graph';
+let busy = false;
+
+// ─────────────────────────────────────────────
+//  IN-MEMORY DATABASE  (mirrors 413db.db)
+// ─────────────────────────────────────────────
+
+const CALL_EDGES = [
+  ["compute_beam_power","project_Ab"],
+  ["compute_beam_power","project_ABc"],
+  ["compute_beam_power","project_ABA"],
+  ["compute_beam_power_wrapper","compute_beam_power"],
+  ["run","compute_beam_power"],
+  ["find_peaks","build_slowness"],
+  ["beam_window","fft_array_data"],
+  ["beam_window","run"],
+  ["beam_window","find_peaks"],
+  ["beam_window_wrapper","beam_window"],
+  ["run_fk","stream_to_array_data"],
+  ["run_fk","build_slowness"],
+  ["run_fk","compute_delays"],
+  ["run_fk","beam_window"],
+  ["run_fd","calc_det_thresh"],
+  ["detect_signals","run_fd"]
+];
+
+const FWD = {}, REV = {};
+for (const [caller, callee] of CALL_EDGES) {
+  if (!FWD[caller]) FWD[caller] = [];
+  if (!REV[callee]) REV[callee] = [];
+  FWD[caller].push(callee);
+  REV[callee].push(caller);
+}
+const ALL_FUNCS = [...new Set(CALL_EDGES.flat())].sort();
+
+const COVERAGE = {
+  "beamforming_new.py":  { covered: 303, total: 581 },
+  "test_beamforming.py": { covered: 39,  total: 39  },
+  "_spectral.py":        { covered: 8,   total: 8   }
+};
+
+const DATAFLOW = {
+  thresh: [
+    { kind:"DEFINE", func:"run_fd", line:1043, ctx:"thresh = calc_det_thresh(...)" },
+    { kind:"USE",    func:"run_fd", line:1046, ctx:"rhs of assignment" },
+    { kind:"CALL",   func:"run_fd", line:1046, ctx:"argument to min()" },
+    { kind:"USE",    func:"run_fd", line:1047, ctx:"comparison: fstat_vals[n] >= min(thresh, thresh_ceil)" },
+    { kind:"USE",    func:"run_fd", line:1049, ctx:"rhs of assignment" },
+    { kind:"USE",    func:"run_fd", line:1050, ctx:"comparison: fstat_vals[n] >= thresh" }
+  ],
+  det_mask: [
+    { kind:"DEFINE", func:"run_fd", line:1047, ctx:"det_mask = fstat_vals >= thresh" },
+    { kind:"USE",    func:"run_fd", line:1055, ctx:"conditional check on det_mask" },
+    { kind:"USE",    func:"run_fd", line:1059, ctx:"passed to signal extraction" }
+  ],
+  fstat_vals: [
+    { kind:"DEFINE", func:"run_fd", line:1030, ctx:"fstat_vals = compute_fstat(...)" },
+    { kind:"USE",    func:"run_fd", line:1045, ctx:"loop over fstat_vals" },
+    { kind:"USE",    func:"run_fd", line:1047, ctx:"comparison with thresh" },
+    { kind:"USE",    func:"run_fd", line:1050, ctx:"comparison with thresh" }
+  ],
+  det_p_val: [
+    { kind:"DEFINE", func:"run_fd",        line:1056, ctx:"det_p_val = fisher_pvalue(...)" },
+    { kind:"USE",    func:"run_fd",        line:1059, ctx:"passed to detect_signals" },
+    { kind:"USE",    func:"detect_signals",line:1130, ctx:"stored in detection output" }
+  ],
+  dets: [
+    { kind:"DEFINE", func:"detect_signals", line:1130, ctx:"dets = run_fd(...)" },
+    { kind:"USE",    func:"detect_signals", line:1130, ctx:"returned as detection result" }
+  ],
+  back_az_vals: [
+    { kind:"DEFINE", func:"find_peaks", line:700, ctx:"back_az_vals = azimuths[peak_idx]" },
+    { kind:"USE",    func:"find_peaks", line:744, ctx:"stored in peak output dict" }
+  ],
+  trc_vel_vals: [
+    { kind:"DEFINE", func:"find_peaks", line:703, ctx:"trc_vel_vals = velocities[peak_idx]" },
+    { kind:"USE",    func:"find_peaks", line:745, ctx:"stored in peak output dict" }
+  ],
+  beam_peaks: [
+    { kind:"DEFINE", func:"find_peaks", line:688, ctx:"beam_peaks = scipy.signal.find_peaks(...)" },
+    { kind:"USE",    func:"find_peaks", line:692, ctx:"index into beam power array" }
+  ],
+  thresh_vals: [
+    { kind:"DEFINE", func:"run_fd", line:1039, ctx:"thresh_vals = calc_det_thresh(fstat_ref)" },
+    { kind:"USE",    func:"run_fd", line:1043, ctx:"thresh = thresh_vals[n]" }
+  ],
+  back_az_95conf: [
+    { kind:"DEFINE", func:"find_peaks", line:706, ctx:"back_az_95conf = az_conf_95[peak_idx]" },
+    { kind:"USE",    func:"find_peaks", line:746, ctx:"stored in peak output dict" }
+  ],
+  fstat_ref_peak: [
+    { kind:"DEFINE", func:"run_fd", line:1032, ctx:"fstat_ref_peak = max(fstat_ref)" },
+    { kind:"USE",    func:"run_fd", line:1035, ctx:"passed to calc_det_thresh" }
+  ]
+};
+
+const FUZZ_RUNS = [
+  { stage:"run_fk",          name:"empty_input",        ch:2, rows:0,   az:0,         seed:null,   status:"expected_failure", error:"ValueError: min() arg is an empty sequence" },
+  { stage:"run_fk",          name:"one_row_dataset",    ch:2, rows:1,   az:0,         seed:null,   status:"expected_failure", error:"ValueError: `dataset` input should have multiple elements." },
+  { stage:"run_fk/find_peaks",name:"mismatched_shape",  ch:2, rows:10,  az:0,         seed:null,   status:"expected_failure", error:"IndexError: boolean index did not match indexed array along dimension 0" },
+  { stage:"run_fd",          name:"nan_inf_input",      ch:2, rows:10,  az:0,         seed:null,   status:"expected_failure", error:"ValueError: array must not contain infs or NaNs" },
+  { stage:"calc_det_thresh", name:"bad_channel_cnt",    ch:0, rows:10,  az:0,         seed:null,   status:"ok",               error:null },
+  { stage:"find_peaks",      name:"high_back_az",       ch:2, rows:10,  az:999,       seed:null,   status:"ok",               error:null },
+  { stage:"find_peaks",      name:"negative_back_az",   ch:2, rows:10,  az:-5,        seed:null,   status:"ok",               error:null },
+  { stage:"run_fk_pipeline", name:null, ch:2, rows:2,   az:0,         seed:2092,   status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:2, rows:76,  az:0,         seed:76758,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:4, rows:76,  az:22.6,      seed:77058,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:2, rows:52,  az:0,         seed:52542,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:3, rows:52,  az:26.1,      seed:52840,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:2, rows:138, az:0,         seed:139316, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:3, rows:138, az:28.3,      seed:139636, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:3, rows:41,  az:13.5,      seed:41615,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:7, rows:165, az:0.7,       seed:166751, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:4, rows:120, az:18.8,      seed:121416, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:5, rows:32,  az:19.1,      seed:32664,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:2, rows:32,  az:19.1,      seed:32553,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:7, rows:121, az:0.99999,   seed:122358, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:2, rows:199, az:23.8,      seed:201103, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:4, rows:17,  az:21.3,      seed:17514,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:5, rows:119, az:26.8,      seed:120524, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:8, rows:52,  az:11.4,      seed:52878,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:8, rows:8,   az:11.4,      seed:8482,   status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:5, rows:78,  az:3.9,       seed:78926,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:3, rows:60,  az:23.4,      seed:60885,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:7, rows:91,  az:10.6,      seed:92184,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:2, rows:91,  az:10.6,      seed:91999,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:4, rows:3,   az:30,        seed:3475,   status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:2, rows:121, az:1.23,      seed:122175, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:4, rows:93,  az:1.4e-45,   seed:93985,  status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:7, rows:2,   az:7.9,       seed:2356,   status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:3, rows:123, az:12.3,      seed:124341, status:"ok", error:null },
+  { stage:"run_fk_pipeline", name:null, ch:8, rows:53,  az:24.6,      seed:54019,  status:"ok", error:null }
+];
+
+// ─────────────────────────────────────────────
+//  GRAPH TRAVERSAL
+// ─────────────────────────────────────────────
+function bfsPath(a, b) {
+  const visited = new Set([a]);
+  const queue = [[a]];
+  while (queue.length) {
+    const path = queue.shift();
+    const cur = path[path.length - 1];
+    for (const c of (FWD[cur] || [])) {
+      if (c === b) return [true, [...path, c]];
+      if (!visited.has(c)) { visited.add(c); queue.push([...path, c]); }
+    }
+  }
+  return [false, []];
+}
+
+function allCallees(a) {
+  const vis = new Set(); const q = [a];
+  while (q.length) { const c = q.shift(); for (const x of (FWD[c]||[])) { if (!vis.has(x)){vis.add(x);q.push(x);} } }
+  return [...vis].sort();
+}
+
+function allCallers(b) {
+  const vis = new Set(); const q = [b];
+  while (q.length) { const c = q.shift(); for (const x of (REV[c]||[])) { if (!vis.has(x)){vis.add(x);q.push(x);} } }
+  return [...vis].sort();
+}
+
+// ─────────────────────────────────────────────
+//  ENTITY EXTRACTION
+// ─────────────────────────────────────────────
+const KNOWN_FILES = ["beamforming_new.py","test_beamforming.py","_spectral.py"];
+const KNOWN_VARS  = Object.keys(DATAFLOW);
+const KNOWN_FUZZ_STAGES = ["run_fk_pipeline","run_fk","run_fd","find_peaks","calc_det_thresh"];
+
+function extractFuncs(text) {
+  const hits = [];
+  for (const f of ALL_FUNCS) {
+    const re = new RegExp('(?<![a-zA-Z_])' + f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '(?![a-zA-Z_])', 'i');
+    const m = re.exec(text);
+    if (m) hits.push({ name: f, pos: m.index });
+  }
+  return hits.sort((a,b)=>a.pos-b.pos).map(h=>h.name);
+}
+function extractFile(text) {
+  return KNOWN_FILES.find(f => text.toLowerCase().includes(f.toLowerCase())) || null;
+}
+function extractVars(text) {
+  return KNOWN_VARS.filter(v => text.toLowerCase().includes(v.toLowerCase()));
+}
+function extractFuzzStage(text) {
+  // longer names first to avoid run_fk matching before run_fk_pipeline
+  return KNOWN_FUZZ_STAGES.find(s => text.toLowerCase().includes(s.toLowerCase())) || null;
+}
+function extractChannel(text) {
+  let m = text.match(/channel\s*(?:count|cnt|=)?\s*(\d+)/i);
+  if (m) return parseInt(m[1]);
+  m = text.match(/(\d+)\s*channel/i);
+  if (m) return parseInt(m[1]);
+  return null;
+}
+
+function bar(pct, w=22) {
+  const f = Math.round((pct/100)*w);
+  return '[' + '█'.repeat(f) + '░'.repeat(w-f) + '] ' + pct.toFixed(1) + '%';
+}
+
+// ─────────────────────────────────────────────
+//  ROUTER
+// ─────────────────────────────────────────────
+function route(question) {
+  const q   = question.toLowerCase();
+  const funcs = extractFuncs(question);
+  const file  = extractFile(question);
+  const vars_ = extractVars(question);
+  const fstage = extractFuzzStage(question);
+  const fch    = extractChannel(question);
+
+  // ── FUZZING ──────────────────────────────
+  if (q.includes('fuzz')) {
+
+    if (/summary|overview|overall/.test(q)) {
+      const byStage = {};
+      for (const r of FUZZ_RUNS) {
+        if (!byStage[r.stage]) byStage[r.stage] = { ok:0, fail:0 };
+        r.status === 'ok' ? byStage[r.stage].ok++ : byStage[r.stage].fail++;
+      }
+      const total = FUZZ_RUNS.length;
+      const ok    = FUZZ_RUNS.filter(r=>r.status==='ok').length;
+      const fail  = total - ok;
+      const lines = [`Fuzzing Summary  (${total} total runs)\n`];
+      for (const [stage, counts] of Object.entries(byStage)) {
+        lines.push(`  ${stage}`);
+        if (counts.ok)   lines.push(`    ✓  ok                     ${counts.ok} run(s)`);
+        if (counts.fail) lines.push(`    ✗  expected_failure       ${counts.fail} run(s)`);
+      }
+      lines.push(`\n  Total: ${ok}/${total} passed  |  ${fail}/${total} failed`);
+      return lines.join('\n');
+    }
+
+    if (/fail|failure|crash/.test(q)) {
+      const rows = FUZZ_RUNS.filter(r=>r.status==='expected_failure');
+      if (!rows.length) return 'No fuzzing failures found.';
+      const lines = [`Fuzzing Failures (${rows.length} total):`];
+      for (const r of rows) {
+        lines.push(`\n  Stage:  ${r.stage}`);
+        lines.push(`  Input:  ${r.name||'—'}`);
+        lines.push(`  Params: channel_cnt=${r.ch}  n_rows=${r.rows}`);
+        lines.push(`  Error:  ${r.error}`);
+      }
+      return lines.join('\n');
+    }
+
+    if (/risky|risk|boundary|out.of.range|anomal/.test(q)) {
+      const rows = FUZZ_RUNS.filter(r =>
+        r.status === 'ok' && (r.az > 360 || r.az < 0 || r.ch === 0 || r.rows <= 1)
+      );
+      if (!rows.length) return 'No risky passing runs found.';
+      const lines = [`Risky Passing Runs — out-of-range inputs that did NOT crash (${rows.length} found):`];
+      for (const r of rows) {
+        const label = r.name || `seed=${r.seed}`;
+        const flags = [];
+        if (r.az > 360 || r.az < 0) flags.push(`back_az=${r.az} (out of [0,360])`);
+        if (r.ch === 0)              flags.push('channel_cnt=0');
+        if (r.rows <= 1)             flags.push(`n_rows=${r.rows} (too small)`);
+        lines.push(`  ✓  ${r.stage.padEnd(25)}  ${label.padEnd(28)}  ⚠ ${flags.join(', ')}`);
+      }
+      return lines.join('\n');
+    }
+
+    if (fch !== null) {
+      const rows = FUZZ_RUNS.filter(r => r.ch === fch);
+      if (!rows.length) return `No fuzzing runs with channel_cnt = ${fch}.`;
+      const lines = [`Fuzzing runs with channel_cnt = ${fch}  (${rows.length} total):`];
+      for (const r of rows) {
+        const tag   = r.status === 'ok' ? '✓' : '✗';
+        const label = r.name || `n_rows=${r.rows}`;
+        lines.push(`  [${tag}]  ${r.stage.padEnd(25)}  ${label.padEnd(28)}  az=${r.az||0}`);
+        if (r.error) lines.push(`        ↳ ${r.error}`);
+      }
+      return lines.join('\n');
+    }
+
+    if (fstage || /stage|runs for/.test(q)) {
+      const target = fstage || '';
+      const rows = FUZZ_RUNS.filter(r => r.stage.toLowerCase().includes(target.toLowerCase()));
+      if (!rows.length) return `No fuzzing runs found for stage '${target}'.`;
+      const lines = [`Fuzzing runs for '${target}' (${rows.length} total):`];
+      for (const r of rows) {
+        const tag   = r.status === 'ok' ? '✓' : '✗';
+        const label = r.name || `seed=${r.seed}`;
+        lines.push(`  [${tag}]  ${label.padEnd(30)}  n_rows=${String(r.rows).padEnd(5)}  ch=${r.ch}  az=${r.az||0}`);
+        if (r.error) lines.push(`        ↳ ${r.error}`);
+      }
+      return lines.join('\n');
+    }
+
+    return (
+      'Fuzzing queries:\n' +
+      '  \'show fuzzing summary\'          — pass/fail counts by stage\n' +
+      '  \'show fuzzing failures\'         — all failures + error messages\n' +
+      '  \'fuzzing runs for run_fk\'       — runs for a specific stage\n' +
+      '  \'show risky fuzzing runs\'       — passed runs with out-of-range inputs\n' +
+      '  \'fuzzing channel 2\'             — runs with a specific channel count'
+    );
+  }
+
+  // ── CALL GRAPH ────────────────────────────
+  if (/caller of|can reach|does.*call/.test(q) || (q.includes('is') && q.includes('caller'))) {
+    if (funcs.length >= 2) {
+      const [found, path] = bfsPath(funcs[0], funcs[1]);
+      return found
+        ? `YES!!! ${funcs[0]} is a caller of ${funcs[1]}\nPath: ${path.join(' → ')}`
+        : `NO!!! ${funcs[0]} cannot reach ${funcs[1]}`;
+    }
+    if (funcs.length === 1)
+      return `Found '${funcs[0]}' — please name a second function to check reachability.`;
+  }
+
+  if (/path from|shortest path|call chain|path to/.test(q)) {
+    if (funcs.length >= 2) {
+      const [found, path] = bfsPath(funcs[0], funcs[1]);
+      return found
+        ? `Shortest path:\n  ${path.join(' → ')}`
+        : `No path found from ${funcs[0]} to ${funcs[1]}`;
+    }
+  }
+
+  if (/what does.*call|directly call|calls directly/.test(q)) {
+    if (funcs.length) {
+      const r = (FWD[funcs[0]] || []).slice().sort();
+      return r.length
+        ? `${funcs[0]} directly calls (${r.length}):\n${r.map(f=>'  • '+f).join('\n')}`
+        : `${funcs[0]} does not call any tracked functions directly.`;
+    }
+  }
+
+  if (/who calls|what calls|directly called by/.test(q)) {
+    if (funcs.length) {
+      const r = (REV[funcs[0]] || []).slice().sort();
+      return r.length
+        ? `Functions that directly call ${funcs[0]} (${r.length}):\n${r.map(f=>'  • '+f).join('\n')}`
+        : `No tracked functions call ${funcs[0]} directly.`;
+    }
+  }
+
+  if (/all callees|reachable from|what can.*reach|what.*functions.*reach/.test(q)) {
+    if (funcs.length) {
+      const r = allCallees(funcs[0]);
+      return r.length
+        ? `All functions reachable from ${funcs[0]} (${r.length} total):\n${r.map(f=>'  • '+f).join('\n')}`
+        : `${funcs[0]} cannot reach any other tracked functions.`;
+    }
+  }
+
+  if (/all callers|what functions call|functions.*call/.test(q)) {
+    if (funcs.length) {
+      const r = allCallers(funcs[0]);
+      return r.length
+        ? `All functions that call ${funcs[0]} (${r.length} total):\n${r.map(f=>'  • '+f).join('\n')}`
+        : `No tracked functions call ${funcs[0]}.`;
+    }
+  }
+
+  // ── COVERAGE ──────────────────────────────
+  if (/summary|overall coverage|all files/.test(q)) {
+    const lines = ['Coverage Summary:'];
+    for (const [f, d] of Object.entries(COVERAGE)) {
+      const pct = (d.covered/d.total)*100;
+      lines.push(`  ${f.padEnd(26)} ${bar(pct)}  (${d.covered}/${d.total})`);
+    }
+    return lines.join('\n');
+  }
+
+  if (/coverage of|branch coverage|how covered|coverage for/.test(q)) {
+    if (file && COVERAGE[file]) {
+      const d = COVERAGE[file];
+      const pct = (d.covered/d.total)*100;
+      return `Branch coverage — ${file}:\n  ${bar(pct)}  (${d.covered}/${d.total} branches covered)`;
+    }
+    if (file) return `No coverage data found for ${file}.`;
+    return 'Please name a file. Known files: ' + KNOWN_FILES.join(', ');
+  }
+
+  if (/uncovered|not covered|missing coverage/.test(q)) {
+    if (file && COVERAGE[file]) {
+      const d = COVERAGE[file];
+      const pct = (d.covered/d.total)*100;
+      const unc = d.total - d.covered;
+      return `Uncovered branches in ${file}:\n  ${unc} of ${d.total} branches uncovered (${(100-pct).toFixed(1)}%)\n\n  For the full line-by-line list run:\n  python query_router.py --db 413db.db --ask "uncovered lines in ${file}"`;
+    }
+    return 'Please name a file. Known files: ' + KNOWN_FILES.join(', ');
+  }
+
+  if (/compare|test run|across run|per run/.test(q)) {
+    if (file && COVERAGE[file]) {
+      const d = COVERAGE[file];
+      const pct = (d.covered/d.total)*100;
+      return `Coverage comparison — ${file}:\n  Run: beamforming_and_detection_run\n  ${bar(pct)}  (${d.covered}/${d.total})`;
+    }
+    return 'Please name a file. Known files: ' + KNOWN_FILES.join(', ');
+  }
+
+  // ── DATAFLOW ──────────────────────────────
+  if (/dependent|data.dependent/.test(q)) {
+    if (vars_.length >= 2) {
+      const sa = new Set((DATAFLOW[vars_[0]]||[]).map(e=>e.func));
+      const sb = new Set((DATAFLOW[vars_[1]]||[]).map(e=>e.func));
+      const shared = [...sa].filter(f=>sb.has(f)).sort();
+      return shared.length
+        ? `YES!!! '${vars_[0]}' and '${vars_[1]}' are data-dependent.\nBoth appear in:\n${shared.map(f=>'  • '+f).join('\n')}`
+        : `NO!!! '${vars_[0]}' and '${vars_[1]}' share no common functions.`;
+    }
+    if (vars_.length === 1) return `Found '${vars_[0]}' — please name a second variable to check dependency.`;
+  }
+
+  if (/where is|dataflow|trace|variable|defined|used/.test(q)) {
+    if (vars_.length) {
+      const evts = DATAFLOW[vars_[0]];
+      if (!evts || !evts.length) return `No dataflow data found for '${vars_[0]}'.`;
+      const lines = [`Dataflow for '${vars_[0]}' (${evts.length} events):`];
+      for (const e of evts) {
+        lines.push(`  line ${String(e.line).padStart(4)}  [${e.kind.padEnd(7)}]  in ${e.func.padEnd(20)}  ${e.ctx}`);
+      }
+      return lines.join('\n');
+    }
+  }
+
+  // ── FALLBACK ──────────────────────────────
+  return [
+    'Query not recognized. Try one of these patterns:',
+    '',
+    '  Call graph:',
+    "    'Is detect_signals a caller of calc_det_thresh?'",
+    "    'What does run_fk directly call?'",
+    "    'Who calls compute_beam_power?'",
+    "    'What can beam_window reach?'",
+    '',
+    '  Coverage:',
+    "    'What is the coverage of beamforming_new.py?'",
+    "    'What lines are uncovered in beamforming_new.py?'",
+    "    'Show coverage summary'",
+    '',
+    '  Dataflow:',
+    "    'Where is thresh used?'",
+    "    'Are thresh and det_mask data-dependent?'",
+    '',
+    '  Fuzzing:',
+    "    'Show fuzzing summary'",
+    "    'Show fuzzing failures'",
+    "    'Show fuzzing runs for run_fk'",
+    "    'Show risky fuzzing runs'"
+  ].join('\n');
+}
+
+// ─────────────────────────────────────────────
+//  UI HELPERS
+// ─────────────────────────────────────────────
+function setMode(m) {
+  mode = m;
+  ['graph','coverage','dataflow','fuzzing'].forEach(k => {
+    document.getElementById('btn-' + k).classList.toggle('active', k === m);
+  });
+  renderExamples();
+}
+
+function renderExamples() {
+  const list = document.getElementById('ex-list');
+  list.innerHTML = '';
+  for (const ex of EXAMPLES[mode]) {
+    const btn = document.createElement('button');
+    btn.className = 'ex-btn';
+    btn.textContent = ex;
+    btn.onclick = () => { document.getElementById('qinput').value = ex; runQuery(); };
+    list.appendChild(btn);
+  }
+}
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function setLoading(on) {
+  busy = on;
+  document.getElementById('qinput').disabled = on;
+  document.getElementById('run-btn').disabled = on;
+}
+
+function runQuery() {
+  if (busy) return;
+  const input = document.getElementById('qinput');
+  const q = input.value.trim();
+  if (!q) return;
+
+  const w = document.getElementById('welcome');
+  if (w) w.remove();
+
+  const out = document.getElementById('output');
+  const entry = document.createElement('div');
+  entry.className = 'entry';
+  entry.innerHTML =
+    `<div class="q-line"><span class="q-prompt">›</span>${esc(q)}</div>` +
+    `<div class="result r-loading" id="live-result">running query…</div>`;
+  out.appendChild(entry);
+  out.scrollTop = out.scrollHeight;
+  input.value = '';
+  setLoading(true);
+
+  setTimeout(() => {
+    const text = route(q);
+    const el = document.getElementById('live-result');
+    el.id = '';
+    el.className = `result ${RES_CLS[mode]}`;
+    el.innerHTML = `<span class="tag ${TAG_CLS[mode]}">${TAG_LABEL[mode]}</span>${esc(text)}`;
+    out.scrollTop = out.scrollHeight;
+    updateTs();
+    setLoading(false);
+  }, 260);
+}
+
+function clearOutput() {
+  document.getElementById('output').innerHTML = '';
+}
+
+function updateTs() {
+  const n = new Date();
+  document.getElementById('ts').textContent =
+    [n.getHours(), n.getMinutes(), n.getSeconds()]
+      .map(x => String(x).padStart(2,'0')).join(':');
+}
+
+document.getElementById('qinput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runQuery();
+});
+
+renderExamples();
+updateTs();
+</script>
+</body>
+</html>

@@ -1,0 +1,1229 @@
+{
+  "summary": {
+    "functions_analyzed": [
+      "beam_window",
+      "find_peaks",
+      "detect_signals",
+      "run_fd",
+      "run_fk",
+      "calc_det_thresh"
+    ],
+    "key_vars_tracked": [
+      "fstat_ref_peak",
+      "fstat_vals",
+      "beam_peaks",
+      "thresh_vals",
+      "back_az_95conf",
+      "trc_vel_vals",
+      "det_p_val",
+      "back_az_vals",
+      "thresh",
+      "det_mask",
+      "dets"
+    ],
+    "total_events": 150,
+    "total_db_rows": 150
+  },
+  "static_analysis_rows": [
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "beam_window",
+      "file": "beamforming_new.py",
+      "line_number": 877,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "beam_window",
+      "file": "beamforming_new.py",
+      "line_number": 877,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "beam_window",
+      "file": "beamforming_new.py",
+      "line_number": 877,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"find_peaks\", \"context\": \"argument to find_peaks()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "beam_window",
+      "file": "beamforming_new.py",
+      "line_number": 877,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"find_peaks\", \"context\": \"argument to find_peaks()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "detect_signals",
+      "file": "beamforming_new.py",
+      "line_number": 1130,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_p_val",
+      "callee": "detect_signals",
+      "file": "beamforming_new.py",
+      "line_number": 1130,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "detect_signals",
+      "file": "beamforming_new.py",
+      "line_number": 1130,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"run_fd\", \"context\": \"argument to run_fd()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_p_val",
+      "callee": "detect_signals",
+      "file": "beamforming_new.py",
+      "line_number": 1130,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"run_fd\", \"context\": \"argument to run_fd()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1015,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"beam_peaks[:, 0]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1015,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1016,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"beam_peaks[:, 1]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1016,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1017,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"beam_peaks[:, 2]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1017,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1019,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"np.zeros_like(fstat_vals, dtype=bool)\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1019,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1019,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"zeros_like\", \"context\": \"argument to zeros_like()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1020,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"np.empty_like(fstat_vals)\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1020,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1020,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"empty_like\", \"context\": \"argument to empty_like()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_ref_peak",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1025,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"minimize_scalar(temp_fstat, bracket=(min(fstat_vals), max(fs\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1025,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1025,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1025,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"minimize_scalar\", \"context\": \"argument to minimize_scalar()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1025,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"minimize_scalar\", \"context\": \"argument to minimize_scalar()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1025,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"min\", \"context\": \"argument to min()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1025,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"max\", \"context\": \"argument to max()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1028,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"fstat_vals > fixed_thresh\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1028,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1028,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: fstat_vals > fixed_thresh\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1043,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"calc_det_thresh(fstat_vals[win_mask], det_p_val, TB_prod, ch\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_p_val",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1043,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1043,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_ref_peak",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1043,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1043,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"calc_det_thresh\", \"context\": \"argument to calc_det_thresh()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_p_val",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1043,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"calc_det_thresh\", \"context\": \"argument to calc_det_thresh()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_ref_peak",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1043,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"calc_det_thresh\", \"context\": \"argument to calc_det_thresh()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1046,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"subscript assign: min(thresh, thresh_ceil)\", \"note\": \"element-wise update\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1046,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1046,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"min\", \"context\": \"argument to min()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1047,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"subscript assign: fstat_vals[n] >= min(thresh, thresh_ceil)\", \"note\": \"element-wise update\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1047,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1047,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1047,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: fstat_vals[n] >= min(thresh, thresh_ceil)\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1047,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: fstat_vals[n] >= min(thresh, thresh_ceil)\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1047,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"min\", \"context\": \"argument to min()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1049,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"subscript assign: thresh\", \"note\": \"element-wise update\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1049,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1050,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"subscript assign: fstat_vals[n] >= thresh\", \"note\": \"element-wise update\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1050,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1050,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1050,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: fstat_vals[n] >= thresh\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1050,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: fstat_vals[n] >= thresh\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1056,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: n < len(det_mask) - min_seq\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1056,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"len\", \"context\": \"argument to len()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1057,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: np.all(det_mask[n:n + min_seq])\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1057,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"all\", \"context\": \"argument to all()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1059,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"all\", \"context\": \"argument to all()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1059,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: n + (det_len + 1) < len(det_mask)\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_mask",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1059,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"len\", \"context\": \"argument to len()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_95conf",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1071,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"stats.circstd(back_az_vals[n:n + det_len], high=360.0) * 2.0\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1071,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1071,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"circstd\", \"context\": \"argument to circstd()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_95conf",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1073,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: back_az_95conf < back_az_lim\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_95conf",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1073,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: back_az_95conf < back_az_lim\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1074,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1074,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"argmax\", \"context\": \"argument to argmax()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1081,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1082,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1083,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1084,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"dets + [[det_time, det_start, det_end, back_az, trc_vel, fst\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1084,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1099,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"range\", \"context\": \"argument to range()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1099,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"len\", \"context\": \"argument to len()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1100,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1100,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1100,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"abs\", \"context\": \"argument to abs()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1100,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"abs\", \"context\": \"argument to abs()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1105,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1105,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1105,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"timedelta64\", \"context\": \"argument to timedelta64()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1105,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"int\", \"context\": \"argument to int()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1106,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1106,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1106,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"timedelta64\", \"context\": \"argument to timedelta64()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1106,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"int\", \"context\": \"argument to int()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: dt < max(dets[j][2] - dets[j][1], dets[j + 1][2] - dets[j + \"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: dt < max(dets[j][2] - dets[j][1], dets[j + 1][2] - dets[j + \"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: dt < max(dets[j][2] - dets[j][1], dets[j + 1][2] - dets[j + \"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: dt < max(dets[j][2] - dets[j][1], dets[j + 1][2] - dets[j + \"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: dt < max(dets[j][2] - dets[j][1], dets[j + 1][2] - dets[j + \"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: dt < max(dets[j][2] - dets[j][1], dets[j + 1][2] - dets[j + \"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: dt < max(dets[j][2] - dets[j][1], dets[j + 1][2] - dets[j + \"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: dt < max(dets[j][2] - dets[j][1], dets[j + 1][2] - dets[j + \"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"max\", \"context\": \"argument to max()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"max\", \"context\": \"argument to max()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"max\", \"context\": \"argument to max()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1109,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"max\", \"context\": \"argument to max()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1110,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: dets[j][5] >= dets[j + 1][5]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1110,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: dets[j][5] >= dets[j + 1][5]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1110,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: dets[j][5] >= dets[j + 1][5]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1110,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: dets[j][5] >= dets[j + 1][5]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1111,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1111,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1111,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1112,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"subscript assign: dets[j]\", \"note\": \"element-wise update\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1112,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1113,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"subscript assign: None\", \"note\": \"element-wise update\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1115,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1115,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1115,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1116,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"subscript assign: None\", \"note\": \"element-wise update\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1118,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: dets.count(None) == 0\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1118,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"comparison: dets.count(None) == 0\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1121,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"[det for det in dets if det is not None]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1121,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1124,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "thresh_vals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1124,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "dets",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1126,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 935,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 935,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 935,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"build_slowness\", \"context\": \"argument to build_slowness()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 935,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"build_slowness\", \"context\": \"argument to build_slowness()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 949,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 949,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 950,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"np.array(pl.map(beam_window_wrapper, args)).reshape(len(beam\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 952,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"[]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 957,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 957,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "back_az_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 957,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"beam_window\", \"context\": \"argument to beam_window()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "trc_vel_vals",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 957,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"beam_window\", \"context\": \"argument to beam_window()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 959,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"beam_peaks + [[peaks[0][0], peaks[0][1], peaks[0][2]]]\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 959,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 960,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"np.array(beam_peaks)\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 960,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 960,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"array\", \"context\": \"argument to array()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 964,
+      "extra_data": "{\"kind\": \"DEFINE\", \"rhs_summary\": \"subscript assign: beam_peaks[:, 2] / (1.0 - beam_peaks[:, 2]) * (M - 1)\", \"note\": \"element-wise update\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 964,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 964,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "beam_peaks",
+      "callee": "run_fk",
+      "file": "beamforming_new.py",
+      "line_number": 966,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 849,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 849,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"min\", \"context\": \"argument to min()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 850,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 850,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"max\", \"context\": \"argument to max()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_ref_peak",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 853,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"if condition: fstat_ref_peak\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_ref_peak",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 854,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 861,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"rhs of assignment\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "fstat_vals",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 861,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"gaussian_kde\", \"context\": \"argument to gaussian_kde()\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_p_val",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 866,
+      "extra_data": "{\"kind\": \"USE\", \"context\": \"return value\"}"
+    },
+    {
+      "analysis_type": "dataflow",
+      "caller": "det_p_val",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 866,
+      "extra_data": "{\"kind\": \"CALL\", \"passed_to\": \"ppf\", \"context\": \"argument to ppf()\"}"
+    }
+  ]
+}

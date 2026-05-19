@@ -1,0 +1,872 @@
+[
+  {
+    "stage": "run_fk",
+    "inputs": {
+      "name": "empty_input",
+      "times_len": 0,
+      "beam_shape": [
+        0,
+        3
+      ],
+      "channel_cnt": 2,
+      "back_az_lim": 0.0
+    },
+    "status": "expected_failure",
+    "error": "ValueError: min() arg is an empty sequence"
+  },
+  {
+    "stage": "run_fk",
+    "inputs": {
+      "name": "one_row_dataset",
+      "times_len": 1,
+      "beam_shape": [
+        1,
+        3
+      ],
+      "channel_cnt": 2,
+      "back_az_lim": 0.0
+    },
+    "status": "expected_failure",
+    "error": "ValueError: `dataset` input should have multiple elements."
+  },
+  {
+    "stage": "run_fk/find_peaks",
+    "inputs": {
+      "name": "mismatched_shape",
+      "times_len": 10,
+      "beam_shape": [
+        5,
+        3
+      ],
+      "channel_cnt": 2,
+      "back_az_lim": 0.0
+    },
+    "status": "expected_failure",
+    "error": "IndexError: boolean index did not match indexed array along dimension 0; dimension is 5 but corresponding boolean dimension is 10"
+  },
+  {
+    "stage": "run_fd",
+    "inputs": {
+      "name": "nan_inf_input",
+      "times_len": 10,
+      "beam_shape": [
+        10,
+        3
+      ],
+      "channel_cnt": 2,
+      "back_az_lim": 0.0
+    },
+    "status": "expected_failure",
+    "error": "ValueError: array must not contain infs or NaNs"
+  },
+  {
+    "stage": "calc_det_thresh",
+    "inputs": {
+      "name": "bad_channel_cnt",
+      "times_len": 10,
+      "beam_shape": [
+        10,
+        3
+      ],
+      "channel_cnt": 0,
+      "back_az_lim": 0.0
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "find_peaks",
+    "inputs": {
+      "name": "high_back_az",
+      "times_len": 10,
+      "beam_shape": [
+        10,
+        3
+      ],
+      "channel_cnt": 2,
+      "back_az_lim": 999.0
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "find_peaks",
+    "inputs": {
+      "name": "negative_back_az",
+      "times_len": 10,
+      "beam_shape": [
+        10,
+        3
+      ],
+      "channel_cnt": 2,
+      "back_az_lim": -5.0
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 0.0,
+      "seed": 2092,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 0.0,
+      "seed": 2092,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 76,
+      "channel_cnt": 2,
+      "back_az_lim": 0.0,
+      "seed": 76758,
+      "beam_shape": [
+        76,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 76,
+      "channel_cnt": 4,
+      "back_az_lim": 22.606825945042516,
+      "seed": 77058,
+      "beam_shape": [
+        76,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 52,
+      "channel_cnt": 2,
+      "back_az_lim": 0.0,
+      "seed": 52542,
+      "beam_shape": [
+        52,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 52,
+      "channel_cnt": 3,
+      "back_az_lim": 26.14248017661983,
+      "seed": 52840,
+      "beam_shape": [
+        52,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 138,
+      "channel_cnt": 2,
+      "back_az_lim": 0.0,
+      "seed": 139316,
+      "beam_shape": [
+        138,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 138,
+      "channel_cnt": 3,
+      "back_az_lim": 28.33824078067057,
+      "seed": 139636,
+      "beam_shape": [
+        138,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 41,
+      "channel_cnt": 3,
+      "back_az_lim": 13.480907434678915,
+      "seed": 41615,
+      "beam_shape": [
+        41,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 165,
+      "channel_cnt": 7,
+      "back_az_lim": 0.6960074819138719,
+      "seed": 166751,
+      "beam_shape": [
+        165,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 120,
+      "channel_cnt": 4,
+      "back_az_lim": 18.820507838934386,
+      "seed": 121416,
+      "beam_shape": [
+        120,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 164,
+      "channel_cnt": 7,
+      "back_az_lim": 5.3883645509447365e-99,
+      "seed": 165735,
+      "beam_shape": [
+        164,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 164,
+      "channel_cnt": 2,
+      "back_az_lim": 5.3883645509447365e-99,
+      "seed": 165550,
+      "beam_shape": [
+        164,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 5.3883645509447365e-99,
+      "seed": 2092,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 100,
+      "channel_cnt": 7,
+      "back_az_lim": 6.516666818594718,
+      "seed": 101224,
+      "beam_shape": [
+        100,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 7,
+      "channel_cnt": 7,
+      "back_az_lim": 6.516666818594718,
+      "seed": 7387,
+      "beam_shape": [
+        7,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 32,
+      "channel_cnt": 5,
+      "back_az_lim": 19.062642789156918,
+      "seed": 32664,
+      "beam_shape": [
+        32,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 32,
+      "channel_cnt": 2,
+      "back_az_lim": 19.062642789156918,
+      "seed": 32553,
+      "beam_shape": [
+        32,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 19.062642789156918,
+      "seed": 2283,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 121,
+      "channel_cnt": 7,
+      "back_az_lim": 0.99999,
+      "seed": 122358,
+      "beam_shape": [
+        121,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 7,
+      "channel_cnt": 7,
+      "back_az_lim": 0.99999,
+      "seed": 7332,
+      "beam_shape": [
+        7,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 199,
+      "channel_cnt": 2,
+      "back_az_lim": 23.82733720143467,
+      "seed": 201103,
+      "beam_shape": [
+        199,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 23.82733720143467,
+      "seed": 2330,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 17,
+      "channel_cnt": 4,
+      "back_az_lim": 21.330574291120712,
+      "seed": 17514,
+      "beam_shape": [
+        17,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 17,
+      "channel_cnt": 2,
+      "back_az_lim": 21.330574291120712,
+      "seed": 17440,
+      "beam_shape": [
+        17,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 21.330574291120712,
+      "seed": 2305,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 119,
+      "channel_cnt": 5,
+      "back_az_lim": 26.816222249391927,
+      "seed": 120524,
+      "beam_shape": [
+        119,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 5,
+      "channel_cnt": 5,
+      "back_az_lim": 26.816222249391927,
+      "seed": 5498,
+      "beam_shape": [
+        5,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 52,
+      "channel_cnt": 8,
+      "back_az_lim": 11.366330943102792,
+      "seed": 52878,
+      "beam_shape": [
+        52,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 8,
+      "channel_cnt": 8,
+      "back_az_lim": 11.366330943102792,
+      "seed": 8482,
+      "beam_shape": [
+        8,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 78,
+      "channel_cnt": 5,
+      "back_az_lim": 3.910721627970196,
+      "seed": 78926,
+      "beam_shape": [
+        78,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 5,
+      "channel_cnt": 5,
+      "back_az_lim": 3.910721627970196,
+      "seed": 5269,
+      "beam_shape": [
+        5,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 60,
+      "channel_cnt": 3,
+      "back_az_lim": 23.3677406516341,
+      "seed": 60885,
+      "beam_shape": [
+        60,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 3,
+      "channel_cnt": 3,
+      "back_az_lim": 23.3677406516341,
+      "seed": 3372,
+      "beam_shape": [
+        3,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 91,
+      "channel_cnt": 7,
+      "back_az_lim": 10.551772112714849,
+      "seed": 92184,
+      "beam_shape": [
+        91,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 91,
+      "channel_cnt": 2,
+      "back_az_lim": 10.551772112714849,
+      "seed": 91999,
+      "beam_shape": [
+        91,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 10.551772112714849,
+      "seed": 2198,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 3,
+      "channel_cnt": 4,
+      "back_az_lim": 29.999999999999996,
+      "seed": 3475,
+      "beam_shape": [
+        3,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 4,
+      "channel_cnt": 4,
+      "back_az_lim": 29.999999999999996,
+      "seed": 4484,
+      "beam_shape": [
+        4,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 187,
+      "channel_cnt": 5,
+      "back_az_lim": 3.075501990253601e-273,
+      "seed": 188868,
+      "beam_shape": [
+        187,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 5,
+      "channel_cnt": 5,
+      "back_az_lim": 3.075501990253601e-273,
+      "seed": 5230,
+      "beam_shape": [
+        5,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 121,
+      "channel_cnt": 2,
+      "back_az_lim": 1.2317544237155433,
+      "seed": 122175,
+      "beam_shape": [
+        121,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 1.2317544237155433,
+      "seed": 2104,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 93,
+      "channel_cnt": 4,
+      "back_az_lim": 1.401298464324817e-45,
+      "seed": 93985,
+      "beam_shape": [
+        93,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 93,
+      "channel_cnt": 2,
+      "back_az_lim": 1.401298464324817e-45,
+      "seed": 93911,
+      "beam_shape": [
+        93,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 2,
+      "back_az_lim": 1.401298464324817e-45,
+      "seed": 2092,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 2,
+      "channel_cnt": 7,
+      "back_az_lim": 7.885150682819261,
+      "seed": 2356,
+      "beam_shape": [
+        2,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 7,
+      "channel_cnt": 7,
+      "back_az_lim": 7.885150682819261,
+      "seed": 7401,
+      "beam_shape": [
+        7,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 123,
+      "channel_cnt": 3,
+      "back_az_lim": 12.333856598502694,
+      "seed": 124341,
+      "beam_shape": [
+        123,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 3,
+      "channel_cnt": 3,
+      "back_az_lim": 12.333856598502694,
+      "seed": 3261,
+      "beam_shape": [
+        3,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  },
+  {
+    "stage": "run_fk_pipeline",
+    "inputs": {
+      "n_rows": 53,
+      "channel_cnt": 8,
+      "back_az_lim": 24.59851050669539,
+      "seed": 54019,
+      "beam_shape": [
+        53,
+        3
+      ]
+    },
+    "status": "ok",
+    "error": null
+  }
+]

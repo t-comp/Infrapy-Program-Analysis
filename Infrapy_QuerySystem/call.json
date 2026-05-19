@@ -1,0 +1,293 @@
+{
+  "summary": {
+    "file": "beamforming_new.py",
+    "total_functions": 22,
+    "total_internal_edges": 16
+  },
+  "static_analysis_rows": [
+    {
+      "analysis_type": "call_graph",
+      "caller": "compute_beam_power",
+      "callee": "project_Ab",
+      "file": "beamforming_new.py",
+      "line_number": 477,
+      "extra_data": "{\"caller_start_line\": 427, \"caller_end_line\": 510, \"callee_start_line\": 323, \"callee_end_line\": 352}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "compute_beam_power",
+      "callee": "project_ABc",
+      "file": "beamforming_new.py",
+      "line_number": 486,
+      "extra_data": "{\"caller_start_line\": 427, \"caller_end_line\": 510, \"callee_start_line\": 388, \"callee_end_line\": 420}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "compute_beam_power",
+      "callee": "project_ABA",
+      "file": "beamforming_new.py",
+      "line_number": 490,
+      "extra_data": "{\"caller_start_line\": 427, \"caller_end_line\": 510, \"callee_start_line\": 356, \"callee_end_line\": 384}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "compute_beam_power_wrapper",
+      "callee": "compute_beam_power",
+      "file": "beamforming_new.py",
+      "line_number": 514,
+      "extra_data": "{\"caller_start_line\": 513, \"caller_end_line\": 514, \"callee_start_line\": 427, \"callee_end_line\": 510}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "run",
+      "callee": "compute_beam_power",
+      "file": "beamforming_new.py",
+      "line_number": 581,
+      "extra_data": "{\"caller_start_line\": 517, \"caller_end_line\": 599, \"callee_start_line\": 427, \"callee_end_line\": 510}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "find_peaks",
+      "callee": "build_slowness",
+      "file": "beamforming_new.py",
+      "line_number": 668,
+      "extra_data": "{\"caller_start_line\": 636, \"caller_end_line\": 752, \"callee_start_line\": 253, \"callee_end_line\": 277}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "beam_window",
+      "callee": "fft_array_data",
+      "file": "beamforming_new.py",
+      "line_number": 874,
+      "extra_data": "{\"caller_start_line\": 873, \"caller_end_line\": 877, \"callee_start_line\": 97, \"callee_end_line\": 246}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "beam_window",
+      "callee": "run",
+      "file": "beamforming_new.py",
+      "line_number": 875,
+      "extra_data": "{\"caller_start_line\": 873, \"caller_end_line\": 877, \"callee_start_line\": 517, \"callee_end_line\": 599}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "beam_window",
+      "callee": "find_peaks",
+      "file": "beamforming_new.py",
+      "line_number": 877,
+      "extra_data": "{\"caller_start_line\": 873, \"caller_end_line\": 877, \"callee_start_line\": 636, \"callee_end_line\": 752}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "beam_window_wrapper",
+      "callee": "beam_window",
+      "file": "beamforming_new.py",
+      "line_number": 881,
+      "extra_data": "{\"caller_start_line\": 880, \"caller_end_line\": 881, \"callee_start_line\": 873, \"callee_end_line\": 877}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "run_fk",
+      "callee": "stream_to_array_data",
+      "file": "beamforming_new.py",
+      "line_number": 931,
+      "extra_data": "{\"caller_start_line\": 884, \"caller_end_line\": 966, \"callee_start_line\": 31, \"callee_end_line\": 94}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "run_fk",
+      "callee": "build_slowness",
+      "file": "beamforming_new.py",
+      "line_number": 935,
+      "extra_data": "{\"caller_start_line\": 884, \"caller_end_line\": 966, \"callee_start_line\": 253, \"callee_end_line\": 277}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "run_fk",
+      "callee": "compute_delays",
+      "file": "beamforming_new.py",
+      "line_number": 936,
+      "extra_data": "{\"caller_start_line\": 884, \"caller_end_line\": 966, \"callee_start_line\": 280, \"callee_end_line\": 314}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "run_fk",
+      "callee": "beam_window",
+      "file": "beamforming_new.py",
+      "line_number": 957,
+      "extra_data": "{\"caller_start_line\": 884, \"caller_end_line\": 966, \"callee_start_line\": 873, \"callee_end_line\": 877}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "run_fd",
+      "callee": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "line_number": 1043,
+      "extra_data": "{\"caller_start_line\": 969, \"caller_end_line\": 1126, \"callee_start_line\": 848, \"callee_end_line\": 866}"
+    },
+    {
+      "analysis_type": "call_graph",
+      "caller": "detect_signals",
+      "callee": "run_fd",
+      "file": "beamforming_new.py",
+      "line_number": 1130,
+      "extra_data": "{\"caller_start_line\": 1129, \"caller_end_line\": 1130, \"callee_start_line\": 969, \"callee_end_line\": 1126}"
+    }
+  ],
+  "metadata_rows": [
+    {
+      "function_name": "stream_to_array_data",
+      "file": "beamforming_new.py",
+      "start_line": 31,
+      "end_line": 94,
+      "line_count": 64
+    },
+    {
+      "function_name": "fft_array_data",
+      "file": "beamforming_new.py",
+      "start_line": 97,
+      "end_line": 246,
+      "line_count": 150
+    },
+    {
+      "function_name": "build_slowness",
+      "file": "beamforming_new.py",
+      "start_line": 253,
+      "end_line": 277,
+      "line_count": 25
+    },
+    {
+      "function_name": "compute_delays",
+      "file": "beamforming_new.py",
+      "start_line": 280,
+      "end_line": 314,
+      "line_count": 35
+    },
+    {
+      "function_name": "project_Ab",
+      "file": "beamforming_new.py",
+      "start_line": 323,
+      "end_line": 352,
+      "line_count": 30
+    },
+    {
+      "function_name": "project_ABA",
+      "file": "beamforming_new.py",
+      "start_line": 356,
+      "end_line": 384,
+      "line_count": 29
+    },
+    {
+      "function_name": "project_ABc",
+      "file": "beamforming_new.py",
+      "start_line": 388,
+      "end_line": 420,
+      "line_count": 33
+    },
+    {
+      "function_name": "compute_beam_power",
+      "file": "beamforming_new.py",
+      "start_line": 427,
+      "end_line": 510,
+      "line_count": 84
+    },
+    {
+      "function_name": "compute_beam_power_wrapper",
+      "file": "beamforming_new.py",
+      "start_line": 513,
+      "end_line": 514,
+      "line_count": 2
+    },
+    {
+      "function_name": "run",
+      "file": "beamforming_new.py",
+      "start_line": 517,
+      "end_line": 599,
+      "line_count": 83
+    },
+    {
+      "function_name": "pure_state_filter",
+      "file": "beamforming_new.py",
+      "start_line": 606,
+      "end_line": 633,
+      "line_count": 28
+    },
+    {
+      "function_name": "find_peaks",
+      "file": "beamforming_new.py",
+      "start_line": 636,
+      "end_line": 752,
+      "line_count": 117
+    },
+    {
+      "function_name": "project_beam",
+      "file": "beamforming_new.py",
+      "start_line": 755,
+      "end_line": 799,
+      "line_count": 45
+    },
+    {
+      "function_name": "extract_signal",
+      "file": "beamforming_new.py",
+      "start_line": 801,
+      "end_line": 840,
+      "line_count": 40
+    },
+    {
+      "function_name": "calc_det_thresh",
+      "file": "beamforming_new.py",
+      "start_line": 848,
+      "end_line": 866,
+      "line_count": 19
+    },
+    {
+      "function_name": "temp_fstat",
+      "file": "beamforming_new.py",
+      "start_line": 1023,
+      "end_line": 1024,
+      "line_count": 2
+    },
+    {
+      "function_name": "temp_kde",
+      "file": "beamforming_new.py",
+      "start_line": 862,
+      "end_line": 863,
+      "line_count": 2
+    },
+    {
+      "function_name": "beam_window",
+      "file": "beamforming_new.py",
+      "start_line": 873,
+      "end_line": 877,
+      "line_count": 5
+    },
+    {
+      "function_name": "beam_window_wrapper",
+      "file": "beamforming_new.py",
+      "start_line": 880,
+      "end_line": 881,
+      "line_count": 2
+    },
+    {
+      "function_name": "run_fk",
+      "file": "beamforming_new.py",
+      "start_line": 884,
+      "end_line": 966,
+      "line_count": 83
+    },
+    {
+      "function_name": "run_fd",
+      "file": "beamforming_new.py",
+      "start_line": 969,
+      "end_line": 1126,
+      "line_count": 158
+    },
+    {
+      "function_name": "detect_signals",
+      "file": "beamforming_new.py",
+      "start_line": 1129,
+      "end_line": 1130,
+      "line_count": 2
+    }
+  ]
+}
