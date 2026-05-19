@@ -1,5 +1,5 @@
 # InfraPy Detection Analysis
-**COM S 4130 Program Analysis — Iowa State University**  
+**COM S 4130 Program Analysis | Iowa State University**  
 **Team Members: Taylor Bauer, Abby Van Der Brink, Trevor List**
 
 ## Overview
@@ -16,4 +16,4 @@ In this project, we use static analysis and testing to create query system for q
  
 The easiest way to interact with the query system is through the provided HTML frontend. Open the HTML file in a browser using Live Server, type a natural language question in the search bar, and click run.
 
-For full details on the analysis, setup, and query system design, please reference the [final project design document.](/docs/
+For full details on the analysis, setup, and query system design, please reference the [final project design document.](/docs/COMS4130-Final-Project-Document.pdf)
