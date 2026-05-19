@@ -6,7 +6,7 @@
 
 In this project, we use static analysis and testing to create query system for questions regarding our program under analysis such as data dependecies, control flow, fuzzing, and other questions. Our analysis was applied to the infrapy/detection module from InfraPy. Infrapy is a a Python program that was developed by developed by Los Alamos National Laboratory (LANL) for nuclear treaty monitoring. The program detects infrasonic soundwaves from nuclear detonations using the Adaptive Fisher Detector (AFD).
 
-# Program Under Analysis
+## Program Under Analysis
 
 - **InfraPy Repository:** https://github.com/LANL-Seismoacoustics/infrapy
 - **Primary file:** beamforming_new.py
